@@ -4,6 +4,7 @@ using NetCoreMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetCoreMVC.Controllers
@@ -20,25 +21,44 @@ namespace NetCoreMVC.Controllers
         // GET: EmployeeController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (id > 10)
+            {
+                // Demonstrate how to return HTTP StatusCode
+                return new StatusCodeResult((int)HttpStatusCode.NotFound);
+            }
+            Employee emp = Employee.GetEmployee(id);
+            return View(emp);
+        }
+
+        // Returns a JSON list
+        public ActionResult IndexJson()
+        {
+            List<Employee> emp = Employee.GetSampleEmployee();
+            return Json(emp);
         }
 
         // GET: EmployeeController/Create
         public ActionResult Create()
         {
-            //TEST PR
             return View();
         }
 
         // POST: EmployeeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Employee emp)
         {
             try
             {
-                //Add insert script here
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    //Add insert script here
+                    return RedirectToAction(nameof(Index), new { create = "success"});
+                }
+                else
+                {
+                    return View(emp);
+                }
             }
             catch
             {
@@ -49,7 +69,8 @@ namespace NetCoreMVC.Controllers
         // GET: EmployeeController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Employee emp = Employee.GetEmployee(id);
+            return View(emp);
         }
 
         // POST: EmployeeController/Edit/5
@@ -59,8 +80,16 @@ namespace NetCoreMVC.Controllers
         {
             try
             {
-                //Add Edit script here
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    //Add Edit script here
+                    //Update DB
+                    return RedirectToAction(nameof(Index), new { edit = "success" });
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
