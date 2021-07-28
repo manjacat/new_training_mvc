@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreMVC.Models;
 using System;
@@ -76,14 +77,13 @@ namespace NetCoreMVC.Controllers
         // POST: EmployeeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Employee emp)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    //Add Edit script here
-                    //Update DB
+                    Employee.SaveEmployee(emp);
                     return RedirectToAction(nameof(Index), new { edit = "success" });
                 }
                 else
@@ -111,6 +111,7 @@ namespace NetCoreMVC.Controllers
         {
             try
             {
+                Employee.DeleteEmployee(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

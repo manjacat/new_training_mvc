@@ -31,11 +31,11 @@ namespace NetCoreMVC.Models
 
         public static List<Employee> GetSampleEmployee()
         {
-            Employee e1 = new Employee { EmployeeID = 1, Name = "Samad", Department = "IT" };
-            Employee e2 = new Employee { EmployeeID = 2, Name = "Ah Kaw", Department = "Sales" };
-            Employee e3 = new Employee { EmployeeID = 3, Name = "Muthusamy", Department = "Account" };
+            Employee e1 = new Employee { EmployeeID = 0, Name = "Samad", Department = "IT" };
+            Employee e2 = new Employee { EmployeeID = 1, Name = "Ah Kaw", Department = "Sales" };
+            Employee e3 = new Employee { EmployeeID = 2, Name = "Muthusamy", Department = "Account" };
             Employee e4 = new Employee { EmployeeID = 3, Name = "Sarimah", Department = "Support" };
-            Employee e5 = new Employee { EmployeeID = 3, Name = "Elizabeh Tan", Department = "HR" };
+            Employee e5 = new Employee { EmployeeID = 4, Name = "Elizabeh Tan", Department = "HR" };
 
             List<Employee> emp = new List<Employee>();
             emp.Add(e1);
@@ -52,6 +52,16 @@ namespace NetCoreMVC.Models
             List<Employee> allemp = GetSampleEmployee();
             Employee emp = allemp.Where(s => s.EmployeeID == id).First();
             return emp;
+        }
+
+        public static void SaveEmployee(Employee emp)
+        {
+            //Save Employee to DB
+        }
+
+        public static void DeleteEmployee(int id)
+        {
+            //Delete Employee from DB
         }
 
         #endregion
