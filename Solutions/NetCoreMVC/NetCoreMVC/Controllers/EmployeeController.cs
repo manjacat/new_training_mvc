@@ -100,7 +100,8 @@ namespace NetCoreMVC.Controllers
         // GET: EmployeeController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Employee emp = Employee.GetEmployee(id);
+            return View(emp);
         }
 
         // POST: EmployeeController/Delete/5
